@@ -10,8 +10,13 @@ if (storageData) {
   const { email, message } = storageData;
   const elements = formEl.elements;
 
-  elements.email.value = email;
-  elements.message.value = message;
+  if (email !== undefined) {
+    elements.email.value = email;
+  }
+
+  if (message !== undefined) {
+    elements.message.value = message;
+  }
 }
 
 formEl.addEventListener(
@@ -20,7 +25,15 @@ formEl.addEventListener(
     const prop = e.target.name;
     const value = e.target.value;
 
-    dataObj[prop] = value;
+    if (prop === 'email') {
+      dataObj.email = value;
+    }
+
+    if (prop == 'message') {
+      dataObj.message = value;
+    }
+
+    // dataObj[prop] = value;
 
     localStorage.setItem('feedback-form-state', JSON.stringify(dataObj));
   }, 500)
@@ -33,4 +46,5 @@ formEl.addEventListener('submit', e => {
   e.target.reset();
 
   console.log(dataObj);
+  dataObj = { email: '', message: '' };
 });
